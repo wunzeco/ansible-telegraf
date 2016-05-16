@@ -21,4 +21,4 @@
 # Consider configs that should be saved in telegraf.d cofig dir
 
 - name: Start telegraf
-  service: name=telegraf state=started
+  service: name=telegraf enabled=yes state=started
