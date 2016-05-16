@@ -14,5 +14,11 @@
 - name: Install telegraf
   apt: name=telegraf state=present
 
+## - name: Create telegraf config file
+## - name: Create telegraf startup script environment file
+## - name: Create telegraf logrotate config file
+
+# Consider configs that should be saved in telegraf.d cofig dir
+
 - name: Start telegraf
   service: name=telegraf state=started
