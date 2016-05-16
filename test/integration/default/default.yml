@@ -1,0 +1,9 @@
+---
+- name: InfluxDB play
+  hosts: test-kitchen
+
+  vars:
+
+  roles:
+    - wunzeco.influxdb
+    - ansible-telegraf
