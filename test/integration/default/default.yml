@@ -2,7 +2,9 @@
 - name: InfluxDB play
   hosts: test-kitchen
 
-  vars:
+  vars_files:
+    - roles/ansible-telegraf/test/input-plugins-vars.yml
+    - roles/ansible-telegraf/test/output-plugins-vars.yml
 
   roles:
     - wunzeco.influxdb
