@@ -31,9 +31,11 @@
   {{ key }} = {{ value }}
 {% elif value is string %}
   {{ key }} = "{{ value }}"
-{# LIST #}
-{% elif value is iterable and value is not mapping %}
-  {{ key }} = [ "{{ value|join('", ') }}" ]
+{# LIST - non-empty #}
+{% elif value is iterable and value is not mapping and value %}
+  {{ key }} = [ "{{ value|join('", "') }}" ]
+{% else %}
+  {{ key }} = {{ value }}
 {% endif %}
 {% endfor %}
 
@@ -51,9 +53,11 @@
   {{ key }} = {{ value }}
 {% elif value is string %}
   {{ key }} = "{{ value }}"
-{# LIST #}
-{% elif value is iterable and value is not mapping %}
+{# LIST - non-empty #}
+{% elif value is iterable and value is not mapping and value %}
   {{ key }} = [ "{{ value|join('", "') }}" ]
+{% else %}
+  {{ key }} = {{ value }}
 {% endif %}
 {% endif %}
 {% endfor %}
@@ -75,9 +79,11 @@
   {{ key }} = {{ value }}
 {% elif value is string %}
   {{ key }} = "{{ value }}"
-{# LIST #}
-{% elif value is iterable and value is not mapping %}
+{# LIST - non-empty #}
+{% elif value is iterable and value is not mapping and value %}
   {{ key }} = [ "{{ value|join('", "') }}" ]
+{% else %}
+  {{ key }} = {{ value }}
 {% endif %}
 {% endif %}
 {% endfor %}
@@ -102,9 +108,11 @@
   {{ key }} = {{ value }}
 {% elif value is string %}
   {{ key }} = "{{ value }}"
-{# LIST #}
-{% elif value is iterable and value is not mapping %}
+{# LIST - non-empty #}
+{% elif value is iterable and value is not mapping and value %}
   {{ key }} = [ "{{ value|join('", "') }}" ]
+{% else %}
+  {{ key }} = {{ value }}
 {% endif %}
 {% endif %}
 {% endfor -%}
@@ -113,9 +121,9 @@
 
 {% endfor %}
 
- ##############################################################################
+###############################################################################
 #                            SERVICE INPUT PLUGINS                            #
-################################################################################
+###############################################################################
 
 {% for input in telegraf_service_inputs %}
 
@@ -131,9 +139,11 @@
   {{ key }} = {{ value }}
 {% elif value is string %}
   {{ key }} = "{{ value }}"
-{# LIST #}
-{% elif value is iterable and value is not mapping %}
+{# LIST - non-empty #}
+{% elif value is iterable and value is not mapping and value %}
   {{ key }} = [ "{{ value|join('", "') }}" ]
+{% else %}
+  {{ key }} = {{ value }}
 {% endif %}
 {% endif %}
 {% endfor %}
