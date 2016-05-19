@@ -5,23 +5,23 @@ telegraf_outputs:     # e.g. influxdb, cloudwatch, amon etc
     retention_policy: "default"
     precision: "s"
     timeout: "5s"
-  - name: amon
-    server_key: "my-server-key"
-    amon_instance: "https://youramoninstance"
-    timeout: "5s"
-  - name: amqp
-    url: "amqp://localhost:5672/influxdb"
-    exchange: "telegraf"
-    routing_tag: "host"
-    data_format: "influx"
-  - name: cloudwatch
-    region: 'us-east-1'
-    access_key: "AccessKey"
-    secret_key: "SecretKey"
-    namespace: 'InfluxData/Telegraf'
-  - name: datadog
-    apikey: "my-secret-key" # required.
-    timeout: "5s"
-  - name: file
-    files: ["stdout", "/tmp/metrics.out"]
-    data_format: "influx"
+  #- name: amon
+  #  server_key: "my-server-key"
+  #  amon_instance: "https://youramoninstance"
+  #  timeout: "5s"
+  #- name: amqp
+  #  url: "amqp://localhost:5672/influxdb"
+  #  exchange: "telegraf"
+  #  routing_tag: "host"
+  #  data_format: "influx"
+  #- name: cloudwatch
+  #  region: 'us-east-1'
+  #  access_key: "AccessKey"
+  #  secret_key: "SecretKey"
+  #  namespace: 'InfluxData/Telegraf'
+  #- name: datadog
+  #  apikey: "my-secret-key" # required.
+  #  timeout: "5s"
+  #- name: file
+  #  files: ["stdout", "/tmp/metrics.out"]
+  #  data_format: "influx"
