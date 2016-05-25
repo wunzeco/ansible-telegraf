@@ -1,21 +1,21 @@
-[submodule "ansible/os-hardening"]
+[submodule "ansible/roles/os-hardening"]
 	path = ansible/roles/os-hardening
 	url = https://github.com/dev-sec/ansible-os-hardening.git
-[submodule "ansible/ssh-hardening"]
+[submodule "ansible/roles/ssh-hardening"]
 	path = ansible/roles/ssh-hardening
 	url = https://github.com/dev-sec/ansible-ssh-hardening.git
 [submodule "ansible/roles/basic-ubuntu"]
-	path = ansible/basic-ubuntu
+	path = ansible/roles/basic-ubuntu
 	url = https://github.com/Servers-for-Hackers/ansible-basic-server.git
 [submodule "ansible/roles/firewall"]
-	path = ansible/firewall
+	path = ansible/roles/firewall
 	url = https://github.com/Servers-for-Hackers/ansible-firewall.git
 [submodule "ansible/roles/fail2ban"]
-	path = ansible/fail2ban
+	path = ansible/roles/fail2ban
 	url = https://github.com/Servers-for-Hackers/ansible-fail2ban.git
 [submodule "ansible/roles/telegraf"]
-	path = ansible/telegraf
+	path = ansible/roles/telegraf
 	url = https://github.com/dj-wasabi/ansible-telegraf.git
 [submodule "ansible/roles/users+groups"]
-	path = ansible/users+groups
+	path = ansible/roles/users+groups
 	url = https://github.com/sansible/users_and_groups.git
