@@ -4,3 +4,6 @@
 [submodule "ansible/ssh-hardening"]
 	path = ansible/ssh-hardening
 	url = https://github.com/dev-sec/ansible-ssh-hardening.git
+[submodule "ansible/basic-ubuntu"]
+	path = ansible/basic-ubuntu
+	url = https://github.com/Servers-for-Hackers/ansible-basic-server.git
