@@ -16,3 +16,6 @@
 [submodule "ansible/telegraf"]
 	path = ansible/telegraf
 	url = https://github.com/dj-wasabi/ansible-telegraf.git
+[submodule "ansible/openvpn"]
+	path = ansible/openvpn
+	url = https://github.com/sansible/openvpn.git
