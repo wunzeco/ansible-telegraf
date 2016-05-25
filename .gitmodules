@@ -13,3 +13,6 @@
 [submodule "ansible/firewall"]
 	path = ansible/firewall
 	url = https://github.com/Servers-for-Hackers/ansible-firewall.git
+[submodule "ansible/fail2ban"]
+	path = ansible/fail2ban
+	url = https://github.com/Servers-for-Hackers/ansible-fail2ban.git
