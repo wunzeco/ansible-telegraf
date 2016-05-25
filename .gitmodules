@@ -16,3 +16,6 @@
 [submodule "ansible/fail2ban"]
 	path = ansible/fail2ban
 	url = https://github.com/Servers-for-Hackers/ansible-fail2ban.git
+[submodule "ansible/telegraf"]
+	path = ansible/telegraf
+	url = https://github.com/dj-wasabi/ansible-telegraf.git
