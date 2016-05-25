@@ -7,9 +7,6 @@
 [submodule "ansible/basic-ubuntu"]
 	path = ansible/basic-ubuntu
 	url = https://github.com/Servers-for-Hackers/ansible-basic-server.git
-[submodule "ansible/user"]
-	path = ansible/user
-	url = https://github.com/Servers-for-Hackers/ansible-user-example.git
 [submodule "ansible/firewall"]
 	path = ansible/firewall
 	url = https://github.com/Servers-for-Hackers/ansible-firewall.git
