@@ -1,0 +1,11 @@
+---
+- hosts: tag_role_cloudstat
+  remote_user: ubuntu
+  become: yes
+  tasks:
+    - debug: var=telegraf_global_tags
+    - debug: var=telegraf_outputs
+    - debug: var=telegraf_default_inputs
+#    - ubuntu-base
+#    - os-hardening
+#    - telegraf
