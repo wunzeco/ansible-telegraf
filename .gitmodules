@@ -4,6 +4,3 @@
 [submodule "ansible/roles/ubuntu-base"]
 	path = ansible/roles/ubuntu-base
 	url = https://github.com/Servers-for-Hackers/ansible-basic-server.git
-[submodule "ansible/roles/telegraf"]
-	path = ansible/roles/telegraf
-	url = https://github.com/wunzeco/ansible-telegraf.git
