@@ -6,11 +6,25 @@ telegraf_global_tags:
     ip: "{{ ec2_ip_address }}"
     type: "{{ ec2_instance_type }}"
 
+telegraf_agent:
+    interval: "10s"
+    round_interval: true
+    metric_batch_size: 1000
+    metric_buffer_limit: 10000
+    collection_jitter: "0s"
+    flush_interval: "10s"
+    flush_jitter: "0s"
+    debug: false
+    quiet: false
+    hostname: ""
+    omit_hostname: true
 
 telegraf_outputs:     # e.g. influxdb, cloudwatch, amon etc
   - name: influxdb
     urls: ["https://hillvalley-aea42fa3.influxcloud.net:8086"]
     database: "rise" # required
+    username: "riser"
+    password: "aXvSxSVa5HOzqLs9W2FT5801Cb48w4NcTem7XxeGvYE"
     retention_policy: "default"
     precision: "s"
     timeout: "5s"
