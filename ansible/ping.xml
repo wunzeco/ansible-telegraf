@@ -1,5 +1,5 @@
 ---
-- hosts: tag_role_cloudstat
+- hosts: all
   remote_user: ubuntu
   become: yes
   tasks:
