@@ -1,9 +1,6 @@
 [submodule "ansible/roles/os-hardening"]
 	path = ansible/roles/os-hardening
 	url = https://github.com/dev-sec/ansible-os-hardening.git
-[submodule "ansible/roles/telegraf"]
-	path = ansible/roles/telegraf
-	url = https://github.com/dj-wasabi/ansible-telegraf.git
 [submodule "ansible/roles/ubuntu-base"]
 	path = ansible/roles/ubuntu-base
 	url = https://github.com/Servers-for-Hackers/ansible-basic-server.git
