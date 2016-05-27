@@ -1,0 +1,8 @@
+---
+- hosts: tag_role_grafana
+  remote_user: ubuntu
+  become: yes
+  roles:
+    - ubuntu-base
+    - os-hardening
+    - grafana
