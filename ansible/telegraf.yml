@@ -2,10 +2,9 @@
 - hosts:
     - tag_env_qa
     - tag_env_dev
-    - tag_role_cloudstat
-    - tag_title_slam
-    - tag_title_knock_out
+    - tag_env_prod
   remote_user: ubuntu
   become: yes
   roles:
+    - ubuntu-base
     - telegraf
