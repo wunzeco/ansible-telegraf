@@ -1,4 +1,6 @@
 ---
+#ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q ubuntu@54.92.203.55"'
+
 telegraf_global_tags:
     env: "{{ ec2_tag_env }}"
     role: "{{ ec2_tag_role }}"
