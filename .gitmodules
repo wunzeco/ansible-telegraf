@@ -7,3 +7,6 @@
 [submodule "ansible/roles/telegraf"]
 	path = ansible/roles/telegraf
 	url = https://github.com/wunzeco/ansible-telegraf.git
+[submodule "ansible/roles/grafana"]
+	path = ansible/roles/grafana
+	url = https://github.com/Stouts/Stouts.grafana.git

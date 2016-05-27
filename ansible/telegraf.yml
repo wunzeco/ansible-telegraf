@@ -1,0 +1,10 @@
+---
+- hosts:
+    - tag_env_qa
+    - tag_env_dev
+    - tag_env_prod
+  remote_user: ubuntu
+  become: yes
+  roles:
+    - ubuntu-base
+    - telegraf
