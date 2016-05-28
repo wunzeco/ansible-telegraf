@@ -5,4 +5,5 @@
   roles:
     - ubuntu-base
     - os-hardening
+    - telegraf
     - grafana
