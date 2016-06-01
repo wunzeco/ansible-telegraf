@@ -3,7 +3,7 @@ grafana_enabled: true                       # The role is enabled
 grafana_apt_repository: deb https://packagecloud.io/grafana/stable/debian/ wheezy  main
 grafana_apt_key: https://packagecloud.io/gpg.key
 
-grafana_version: 3.0.1                     # Set version
+grafana_version: 3.0.4-1464167696                     # Set version
 
 grafana_app_mode: production
 
@@ -86,18 +86,18 @@ grafana_github_allowed_organizations:
 grafana_github_auth_allow_sign_up: true
 
 # Google Auth
-grafana_google_enabled: false                  # Enable Google Auth
-grafana_google_client_id: some_id
-grafana_google_client_secret: some_secret
+grafana_google_enabled: true                  # Enable Google Auth
+grafana_google_client_id: 979094894930-qmjot2c1ttm8eo968loh8gvp592t3feq.apps.googleusercontent.com
+grafana_google_client_secret: rqqFtLUAdNT2tT-GE4NxEGQJ
 grafana_google_scopes: https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
 grafana_google_auth_url: https://accounts.google.com/o/oauth2/auth
 grafana_google_token_url: https://accounts.google.com/o/oauth2/token
 grafana_google_api_url: https://www.googleapis.com/oauth2/v1/userinfo
-grafana_google_allowed_domains: mycompany.com othercompany.com
-grafana_google_auth_allow_sign_up: true
+grafana_google_allowed_domains: topps.com
+grafana_google_auth_allow_sign_up: false
 
 # Basic Auth
-grafana_auth_basic_enabled: true
+grafana_auth_basic_enabled: false
 
 # Auth Proxy
 grafana_auth_proxy_enabled: false

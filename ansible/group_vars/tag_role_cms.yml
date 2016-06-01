@@ -1,0 +1,14 @@
+---
+telegraf_inputs:
+  - name: procstat
+    exe: mongrel2
+    fielddrop: ["cpu_time_*"]
+  - name: procstat
+    exe: circusd
+    fielddrop: ["cpu_time_*"]
+  - name: procstat
+    pattern: "stats.main"
+    fielddrop: ["cpu_time_*"]
+  - name: procstat
+    pattern: "cms_server.py"
+    fielddrop: ["cpu_time_*"]

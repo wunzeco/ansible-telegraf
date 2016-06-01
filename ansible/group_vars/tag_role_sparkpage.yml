@@ -1,0 +1,11 @@
+---
+telegraf_inputs:
+  - name: procstat
+    exe: circusd
+    fielddrop: ["cpu_time_*"]
+  - name: procstat
+    pattern: "consumer.py"
+    fielddrop: ["cpu_time_*"]
+  - name: procstat
+    pattern: "resultcollector.py"
+    fielddrop: ["cpu_time_*"]
