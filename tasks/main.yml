@@ -1,11 +1,12 @@
 ---
+  
 - name: Download and install telegraf apt public signing key
   apt_key:
     url:   "{{ telegraf_signing_key_url }}"
     state: present
 
 - name: Add telegraf apt repository definition to apt sources list
-  apt_repository: 
+  apt_repository:
     repo:         "{{ telegraf_apt_repo }}"
     update_cache: yes
     state:        present
@@ -14,8 +15,8 @@
   apt: name=telegraf state=present
 
 - name: Create telegraf config file
-  template: 
-    src:   telegraf.conf.j2 
+  template:
+    src:   telegraf.conf.j2
     dest:  /etc/telegraf/telegraf.conf
     owner: root
     group: root
@@ -23,8 +24,8 @@
   notify: Restart telegraf
 
 - name: Create telegraf startup script environment vars file
-  template: 
-    src:   etc.default.telegraf.j2 
+  template:
+    src:   etc.default.telegraf.j2
     dest:  /etc/default/telegraf
     owner: root
     group: root
@@ -32,8 +33,8 @@
   notify: Restart telegraf
 
 - name: Create telegraf logrotate config file
-  template: 
-    src:   logrotate.j2 
+  template:
+    src:   logrotate.j2
     dest:  /etc/logrotate.d/telegraf
     owner: root
     group: root
