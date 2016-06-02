@@ -1,0 +1,104 @@
+# Reads oids value from one or many snmp agents
+[[inputs.snmp]]
+  ## Use 'oids.txt' file to translate oids to names
+  ## To generate 'oids.txt' you need to run:
+  ##   snmptranslate -m all -Tz -On | sed -e 's/"//g' > /tmp/oids.txt
+  ## Or if you have an other MIB folder with custom MIBs
+  ##   snmptranslate -M /mycustommibfolder -Tz -On -m all | sed -e 's/"//g' > oids.txt
+  snmptranslate_file = "{{ input.snmptranslate_file }}"
+
+{% for host_opt in input.hosts %}
+  [[inputs.snmp.host]]
+{# START: loop for inputs.snmp.host #}
+{% for key,value in host_opt|dictsort %}
+{% if key == 'tables' %}
+{# Do nothing for 'tables' list in this loop #}
+{% elif value|string == 'True' or value|string == 'False' %}
+    {{ key }} = {{ value|lower }}
+{% elif value is number %}
+    {{ key }} = {{ value }}
+{% elif value is string %}
+    {{ key }} = "{{ value }}"
+{# LIST #}
+{% elif value is iterable and value is not mapping %}
+{% if value %}
+    {{ key }} = [ "{{ value|join('", "') }}" ]
+{% else %}
+    {{ key }} = []
+{% endif %}
+{% endif -%}
+
+{% endfor %}
+{# END: loop for inputs.snmp.host -#}
+
+{% if host_opt.tables|default(false) %}
+{# START: loop for inputs.snmp.host.table #}
+{% for host_table_opt in host_opt.tables %}
+    [[inputs.snmp.host.table]]
+{% for k,v in host_table_opt.iteritems() %}
+{% if v|string == 'True' or v|string == 'False' %}
+      {{ k }} = {{ v|lower }}
+{% elif v is number %}
+      {{ k }} = {{ v }}
+{% elif v is string %}
+      {{ k }} = "{{ v }}"
+{# LIST #}
+{% elif v is iterable and v is not mapping %}
+      {{ k }} = [ "{{ v|join('", "') }}" ]
+{% endif %}
+{% endfor %}
+{% endfor -%}
+{# END: loop for inputs.snmp.host.table -#}
+
+{% endif -%}
+
+{% endfor %}
+
+{% for get_opt in input.gets %}
+  [[inputs.snmp.get]]
+{% for key,value in get_opt.iteritems() %}
+{% if value|string == 'True' or value|string == 'False' %}
+    {{ key }} = {{ value|lower }}
+{% elif value is number %}
+    {{ key }} = {{ value }}
+{% elif value is string %}
+    {{ key }} = "{{ value }}"
+{# LIST #}
+{% elif value is iterable and value is not mapping %}
+    {{ key }} = [ "{{ value|join('", "') }}" ]
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for bulk_opt in input.bulks %}
+  [[inputs.snmp.bulk]]
+{% for key,value in bulk_opt.iteritems() %}
+{% if value|string == 'True' or value|string == 'False' %}
+    {{ key }} = {{ value|lower }}
+{% elif value is number %}
+    {{ key }} = {{ value }}
+{% elif value is string %}
+    {{ key }} = "{{ value }}"
+{# LIST #}
+{% elif value is iterable and value is not mapping %}
+    {{ key }} = [ "{{ value|join('", "') }}" ]
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+  # SNMP TABLEs
+{% for table_opt in input.tables %}
+  [[inputs.snmp.table]]
+{% for key,value in table_opt.iteritems() %}
+{% if value|string == 'True' or value|string == 'False' %}
+    {{ key }} = {{ value|lower }}
+{% elif value is number %}
+    {{ key }} = {{ value }}
+{% elif value is string %}
+    {{ key }} = "{{ value }}"
+{# LIST #}
+{% elif value is iterable and value is not mapping %}
+    {{ key }} = [ "{{ value|join('", "') }}" ]
+{% endif %}
+{% endfor %}
+{% endfor %}

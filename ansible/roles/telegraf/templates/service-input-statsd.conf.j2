@@ -1,0 +1,19 @@
+# Statsd Server
+[[inputs.statsd]]
+{% for key,value in input.iteritems() %}
+{% if key != 'name' %}
+{% if key == 'percentiles' %}
+  percentiles = [ {{ value|join(', ') }} ]
+{% elif value|string == 'True' or value|string == 'False' %}
+  {{ key }} = {{ value|lower }}
+{% elif value is number %}
+  {{ key }} = {{ value }}
+{% elif value is string %}
+  {{ key }} = "{{ value }}"
+{# LIST #}
+{% elif value is iterable and value is not mapping %}
+  {{ key }} = [ "{{ value|join('", "') }}" ]
+{% endif %}
+{% endif %}
+{% endfor %}
+

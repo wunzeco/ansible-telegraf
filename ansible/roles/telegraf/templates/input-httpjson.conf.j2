@@ -1,0 +1,30 @@
+# Read flattened metrics from one or more JSON HTTP endpoints
+[[inputs.httpjson]]
+  ## a name for the service being polled
+  name = "{{ input.service_name }}"
+  servers = [ "{{ input.servers|join('", "') }}" ]
+  method = "{{ input.method }}"
+{% if input.tag_keys %}
+  tag_keys = [ "{{ input.tag_keys|join('", "') }}" ]
+{% endif %}
+{% if input.ssl_ca|default(false) and input.ssl_cert|default(false) and input.ssl_key|default(false) %}
+  ## Optional SSL Config
+  ssl_ca = "{{ input.ssl_ca }}"
+  ssl_cert = "{{ input.ssl_cert }}"
+  ssl_key = "{{ input.ssl_key }}"
+  ## Use SSL but skip chain & host verification
+  insecure_skip_verify = {{ input.insecure_skip_verify|bool|lower }}
+{% endif %}
+{% if input.parameters %}
+  [inputs.httpjson.parameters]
+{% for k,v in input.parameters.iteritems() %}
+    {{ k }} = "{{ v }}"
+{% endfor %}
+{% endif %}
+{% if input.headers %}
+  [inputs.httpjson.headers]
+{% for k,v in input.headers.iteritems() %}
+    {{ k }} = "{{ v }}"
+{% endfor %}
+{% endif %}
+
