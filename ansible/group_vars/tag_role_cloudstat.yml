@@ -1,9 +1,0 @@
----
-telegraf_inputs:
-  - name: redis
-    servers: "{{ groups['elasticache_nodes'] }}"
-#  - name: mysql
-#    servers: "{{ groups['rds']|map('extract', hostvars, 'ec2__address')|list }}"
-#    servers: "{{ groups['rds']|format('tcp(%s):3307')|list }}"
-#  - name: exe # ELB logs
-#  - name: net_response # XML Team?

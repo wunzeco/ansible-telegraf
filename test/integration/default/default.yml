@@ -1,0 +1,12 @@
+---
+- name: Telegraf play
+  hosts: test-kitchen
+
+  vars_files:
+    - roles/ansible-telegraf/test/input-plugins-vars.yml
+    - roles/ansible-telegraf/test/output-plugins-vars.yml
+
+  roles:
+    - wunzeco.docker
+    - wunzeco.influxdb
+    - ansible-telegraf

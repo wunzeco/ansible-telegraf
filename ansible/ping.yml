@@ -1,7 +1,0 @@
----
-- hosts: all
-  remote_user: ubuntu
-  become: yes
-  tasks:
-    - name: test connection
-      ping:

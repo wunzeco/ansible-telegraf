@@ -1,3 +1,0 @@
----
-telegraf_inputs:
-  - name: redis

@@ -1,0 +1,33 @@
+# Read JMX metrics through Jolokia
+[[inputs.jolokia]]
+  ## This is the context root used to compose the jolokia url
+  context = "{{ input.context|default('/jolokia') }}"
+{% if input.mode|default(false) %}
+  mode = "{{ input.mode }}"
+{% endif %}
+{% if input.proxy|default(false) %}
+  [inputs.jolokia.proxy]
+    host = "{{ input.proxy.host|default('127.0.0.1') }}"
+    port = "{{ input.proxy.port|default('8080') }}"
+{% endif %}
+  ## List of servers exposing jolokia read service
+{% for server in input.servers %}
+  [[inputs.jolokia.servers]]
+    name = "{{ server.name }}"
+    host = "{{ server.host }}"
+    port = "{{ server.port }}"
+{% if server.username|default(false) and server.password|default(false) %}
+    username = "{{ server.username }}"
+    password = "{{ server.password }}"
+{% endif %}
+{% endfor %}
+  ## List of metrics collected on above servers
+  ## Each metric consists in a name, a jmx path and either
+  ## a pass or drop slice attribute.
+{% for metric in input.metrics %}
+  ## {{ metric.description|default(metric.name) }}
+  [[inputs.jolokia.metrics]]
+    name = "{{ metric.name }}"
+    mbean  = "{{ metric.mbean }}"
+    attribute = "{{ metric.attribute }}"
+{% endfor %}

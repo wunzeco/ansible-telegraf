@@ -1,6 +1,0 @@
----
-telegraf_inputs:
-  - name: mongodb
-  - name: procstat
-    exe: mongod
-    fielddrop: ["cpu_time_*"]

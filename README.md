@@ -1,7 +1,25 @@
-# rise-kit
-Infrastructure as Code using Ansible, Terraform, and Vagrant
+telegraf
+==============
 
-https://serversforhackers.com/an-ansible-tutorial
+Ansible role to install and configure Telegraf.
 
-$ pip install ansible
-$
+
+## Example
+
+```
+- hosts: myhost
+
+  vars:
+    
+  roles:
+    - wunzeco.telegraf
+```
+
+> **Note:** 
+>    example variables for configuring input and output plugins, see
+>    `test/input-plugins-vars.yml` and `test/output-plugins-vars.yml` respectively
+
+## Dependencies
+
+none
+

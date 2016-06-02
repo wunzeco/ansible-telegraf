@@ -1,0 +1,20 @@
+# Pull Metric Statistics from Amazon CloudWatch
+[[inputs.cloudwatch]]
+  region = '{{ input.region }}'
+{% if input.access_key|default(false) and input.secret_key|default(false) %}
+  access_key = "{{ input.access_key }}"
+  secret_key = "{{ input.secret_key }}"
+{% endif %}
+  period = '{{ input.period|default("1m") }}'
+  delay = '{{ input.delay|default("1m") }}'
+  interval = '{{ input.interval|default("1m") }}'
+  namespace = '{{ input.namespace|default("AWS/ELB") }}'
+{% if input.metrics|default(false) %}
+  [[inputs.cloudwatch.metrics]]
+    names = ['Latency', 'RequestCount']
+{% if input.metrics.dimensions|default(false) %}
+    [[inputs.cloudwatch.metrics.dimensions]]
+      name = '{{ input.metrics.dimensions.name }}'
+      value = '{{ input.metrics.dimensions.value }}'
+{% endif %}
+{% endif %}
