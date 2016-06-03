@@ -1,0 +1,11 @@
+- name: Add InfluxData repository file | RedHat
+  yum_repository:
+    name: influxdata
+    description: InfluxData repository
+    baseurl: "{{ telegraf_yum_repo }}"
+    gpgkey: "{{ telegraf_signing_key_url }}"
+
+- name: Install telegraf | RedHat
+  yum:
+    name: telegraf
+    state: present
