@@ -3,19 +3,20 @@
 telegraf_user:  telegraf
 telegraf_group: "{{ telegraf_user }}"
 
-telegraf_signing_key_url: "https://repos.influxdata.com/influxdb.key" 
-telegraf_apt_repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable" 
+telegraf_signing_key_url: "https://repos.influxdata.com/influxdb.key"
+telegraf_apt_repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+telegraf_yum_repo: "https://repos.influxdata.com/centos/7Server/$basearch/stable"
 
 telegraf_opts: []
 
 ################
 ## Configuration
 #
-# For further information on configuration settings, please refer to 
+# For further information on configuration settings, please refer to
 # https://docs.influxdata.com/telegraf/
 
 telegraf_global_tags: {}
-## telegraf_global_tags: 
+## telegraf_global_tags:
 ##   dc: "eu-west-1"
 ##   rack: "1a"
 ##   user: "$USER"
@@ -61,7 +62,7 @@ telegraf_default_inputs:
   - name: processes
   - name: swap
   - name: system
-  
+
 telegraf_inputs: []
 
 ####################################
