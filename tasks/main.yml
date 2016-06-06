@@ -3,31 +3,31 @@
 - name: Install influxdb
   include: "install-{{ ansible_os_family|lower }}.yml"
 
-#- name: Create telegraf config file
-#  template: 
-#    src:   telegraf.conf.j2 
-#    dest:  "{{ telegraf_conf_dir }}/telegraf.conf"
-#    owner: root
-#    group: root
-#    mode:  0644
-#  notify: Restart telegraf
-#
-#- name: Create telegraf startup script environment vars file
-#  template: 
-#    src:   etc.default.telegraf.j2 
-#    dest:  /etc/default/telegraf
-#    owner: root
-#    group: root
-#    mode:  0644
-#  notify: Restart telegraf
-#
-#- name: Create telegraf logrotate config file
-#  template: 
-#    src:   telegraf.logrotate.j2 
-#    dest:  /etc/logrotate.d/telegraf
-#    owner: root
-#    group: root
-#    mode:  0644
-#
+- name: Create telegraf config file
+  template: 
+    src:   telegraf.conf.j2 
+    dest:  "{{ telegraf_conf_dir }}/telegraf.conf"
+    owner: root
+    group: root
+    mode:  0644
+  notify: Restart telegraf
+
+- name: Create telegraf startup script environment vars file
+  template: 
+    src:   etc.default.telegraf.j2 
+    dest:  /etc/default/telegraf
+    owner: root
+    group: root
+    mode:  0644
+  notify: Restart telegraf
+
+- name: Create telegraf logrotate config file
+  template: 
+    src:   telegraf.logrotate.j2 
+    dest:  /etc/logrotate.d/telegraf
+    owner: root
+    group: root
+    mode:  0644
+
 - name: Start telegraf
   service: name=telegraf enabled=yes state=started
