@@ -10,6 +10,7 @@ Ansible role to install and configure Telegraf.
 - hosts: myhost
 
   vars:
+    telegraf_version: "0.13.0-1"
     
   roles:
     - wunzeco.telegraf
