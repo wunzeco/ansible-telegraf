@@ -1,0 +1,17 @@
+---
+
+- name: Download and install telegraf apt public signing key
+  apt_key:
+    url:   "{{ telegraf_signing_key_url }}"
+    state: present
+
+- name: Add telegraf apt repository definition to apt sources list
+  apt_repository: 
+    repo:         "{{ telegraf_apt_repo }}"
+    update_cache: yes
+    state:        present
+
+- name: Install telegraf
+  apt: 
+    name:  "telegraf={{ telegraf_version|default('*') }}"
+    state: present

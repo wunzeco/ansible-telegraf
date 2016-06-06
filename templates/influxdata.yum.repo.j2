@@ -1,0 +1,6 @@
+[influxdb]
+name = InfluxDB Repository - CentOS \$releasever
+baseurl = {{ influxdb_yum_repo_baseurl }}
+enabled = 1
+gpgcheck = 1
+gpgkey = {{ influxdb_signing_key_url }}

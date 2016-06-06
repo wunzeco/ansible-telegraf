@@ -3,16 +3,25 @@
 telegraf_user:  telegraf
 telegraf_group: "{{ telegraf_user }}"
 
+#############
+## Package
+telegraf_version: '*'                # e.g. 0.13.0 or '*' for latest
 telegraf_signing_key_url: "https://repos.influxdata.com/influxdb.key" 
 telegraf_apt_repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable" 
+telegraf_yum_repo_baseurl: 'https://repos.influxdata.com/centos/\$releasever/\$basearch/stable'
 
-telegraf_opts: []
 
 ################
 ## Configuration
 #
 # For further information on configuration settings, please refer to 
 # https://docs.influxdata.com/telegraf/
+
+telegraf_opts: []
+telegraf_log_dir:  /var/log/telegraf
+telegraf_pid_dir:  /var/run/telegraf
+telegraf_conf_dir: /etc/telegraf
+telegraf_open_file_limit: 65536
 
 telegraf_global_tags: {}
 ## telegraf_global_tags: 
