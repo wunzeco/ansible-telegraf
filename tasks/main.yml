@@ -1,6 +1,6 @@
 ---
 
-- name: Install influxdb
+- name: Install telegraf
   include: "install-{{ ansible_os_family|lower }}.yml"
 
 - name: Create telegraf config file
