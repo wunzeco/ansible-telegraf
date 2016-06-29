@@ -20,6 +20,16 @@ Ansible role to install and configure Telegraf.
 >    example variables for configuring input and output plugins, see
 >    `test/input-plugins-vars.yml` and `test/output-plugins-vars.yml` respectively
 
+
+## Testing
+
+To run this role's integration tests
+
+```
+kitchen test
+```
+
+
 ## Dependencies
 
 none
