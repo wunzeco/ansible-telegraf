@@ -1,0 +1,10 @@
+# A Webhooks Event collector
+[[inputs.webhooks]]
+  ## Address and port to host Webhook listener on
+  service_address = "{{ input.service_address|default(':1619') }}"
+
+{% for wh in input.webhooks %}
+  [inputs.webhooks.{{ wh.name }}]
+    path = "{{ wh.path }}"
+
+{% endfor %}

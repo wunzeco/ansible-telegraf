@@ -1,0 +1,47 @@
+# Stream and parse log file(s).
+[[inputs.logparser]]
+  ## Log files to parse.
+  ## These accept standard unix glob matching rules, but with the addition of
+  ## ** as a "super asterisk". ie:
+  ##   /var/log/**.log     -> recursively find all .log files in /var/log
+  ##   /var/log/*/*.log    -> find all .log files with a parent dir in /var/log
+  ##   /var/log/apache.log -> only tail the apache log file
+{% for key,value in input.iteritems() %}
+{% if key != 'name' %}
+{% if value|string == 'True' or value|string == 'False' %}
+  {{ key }} = {{ value|lower }}
+{% elif value is number %}
+  {{ key }} = {{ value }}
+{% elif value is string %}
+  {{ key }} = "{{ value }}"
+{# LIST #}
+{% elif value is iterable and value is not mapping %}
+  {{ key }} = [ "{{ value|join('", "') }}" ]
+{% elif key == "grok" %}
+
+  ## Parse logstash-style "grok" patterns:
+  ##   Telegraf built-in parsing patterns: https://goo.gl/dkay10
+  [inputs.logparser.grok]
+    ## This is a list of patterns to check the given log file(s) for.
+    ## Note that adding patterns here increases processing time. The most
+    ## efficient configuration is to have one pattern per logparser.
+    ## Other common built-in patterns are:
+    ##   %{COMMON_LOG_FORMAT}   (plain apache & nginx access logs)
+    ##   %{COMBINED_LOG_FORMAT} (access logs + referrer & agent)
+    patterns = [ "{{ value.patterns|join('", "') }}" ]
+    ## Name of the outputted measurement name.
+    measurement = "{{ value.measurement }}"
+    ## Full path(s) to custom pattern files.
+{% if value.custom_pattern_files %}
+    custom_pattern_files = [ "{{ value.custom_pattern_files|join('", "') }}" ]
+{% else %}
+    custom_pattern_files = []
+{% endif %}
+    ## Custom patterns can also be defined here. Put one pattern per line.
+    custom_patterns = '''
+    {{ value.custom_patterns|indent(4, False) }}
+    '''
+{% endif %}
+{% endif %}
+{% endfor %}
+
