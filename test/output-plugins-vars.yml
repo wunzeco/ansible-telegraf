@@ -2,9 +2,10 @@ telegraf_outputs:     # e.g. influxdb, cloudwatch, amon etc
   - name: influxdb
     urls: [ "http://localhost:8086" ] # required
     database: "telegraf" # required
-    retention_policy: "default"
+    retention_policy: ""
     precision: "s"
     timeout: "5s"
+    write_consistency: any
   #- name: amon
   #  server_key: "my-server-key"
   #  amon_instance: "https://youramoninstance"

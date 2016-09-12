@@ -49,10 +49,11 @@ telegraf_agent:
 telegraf_outputs:     # e.g. influxdb, cloudwatch, amon etc
   - name: influxdb
     urls: [ "http://localhost:8086" ] # required
-    database: "telegraf" # required
-    retention_policy: "default"
+    database: "telegraf"              # required
+    retention_policy: ""              # Empty string writes to the default rp.
     precision: "s"
     timeout: "5s"
+    write_consistency: any
 
 ############################
 ##  INPUT PLUGINS Config  ##

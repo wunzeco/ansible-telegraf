@@ -87,6 +87,30 @@ telegraf_inputs:
       "http://localhost:8086/debug/vars"
     ]
   
+#telegraf_service_inputs:
+#  # Stream and parse log file(s).
+#  - name: logparser
+#    files: ["/var/log/apache/access.log"]
+#    from_beginning: false
+#    grok:
+#      patterns: ["%{COMBINED_LOG_FORMAT}"]
+#      measurement: "apache_access_log"
+#      custom_pattern_files: []
+#      custom_patterns: | 
+#        CUSTOM_PATTERN_1_LOG_FORMAT
+#        CUSTOM_PATTERN_2_LOG_FORMAT
+#  # A Webhooks Event collector
+#  - name: webhooks
+#    ## Address and port to host Webhook listener on
+#    service_address: ":1619"
+#    webhooks:
+#      - name: github
+#        path: "/github"
+#      - name: mandrill
+#        path: "/mandrill"
+#      - name: rollbar
+#        path: "/rollbar"
+
 
 ###########################
 ##  EXAMPLE CONFIG
@@ -135,6 +159,21 @@ telegraf_inputs:
 ##     ]
 ##   
 ##   
+
+##  # Read specific statistics per cgroup
+##  - name: cgroup
+##      ## Directories in which to look for files, globs are supported.
+##      # paths: [
+##      #   "/cgroup/memory",
+##      #   "/cgroup/memory/child1",
+##      #   "/cgroup/memory/child2/*",
+##      # ]
+##      ## cgroup stat fields, as file names, globs are supported.
+##      ## these file names are appended to each path from above.
+##      # files: ["memory.*usage*", "memory.limit_in_bytes"]
+
+##   
+##   
 ##   # Pull Metric Statistics from Amazon CloudWatch
 ##   - name: cloudwatch
 ##     ## Amazon Region
@@ -172,6 +211,23 @@ telegraf_inputs:
 ##       dimensions:             # REMEMBER inputs.cloudwatch.metrics.dimensions:
 ##         name: 'LoadBalancerName'
 ##         value: 'p-example'
+##   
+##   
+##  Gather health check statuses from services registered in Consul
+##  - name: consul
+##    ## Most of these values defaults to the one configured on a Consul's agent level.
+##    ## Optional Consul server address (default: "localhost")
+##    # address: "localhost"
+##    ## Optional URI scheme for the Consul server (default: "http")
+##    # scheme: "http"
+##    ## Optional ACL token used in every request (default: "")
+##    # token: ""
+##    ## Optional username used for request HTTP Basic Authentication (default: "")
+##    # username: ""
+##    ## Optional password used for HTTP Basic Authentication (default: "")
+##    # password: ""
+##    ## Optional data centre to query the health checks from (default: "")
+##    # datacentre: ""
 ##   
 ##   
 ##   # Read metrics from one or many couchbase clusters
@@ -974,7 +1030,39 @@ telegraf_inputs:
 ##     ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
 ##     data_format: "influx"
 ##   
-##   
+##    
+
+##  # Stream and parse log file(s).
+##  - name: logparser
+##    ## Log files to parse.
+##    ## These accept standard unix glob matching rules, but with the addition of
+##    ## ** as a "super asterisk". ie:
+##    ##   /var/log/**.log     -> recursively find all .log files in /var/log
+##    ##   /var/log/*/*.log    -> find all .log files with a parent dir in /var/log
+##    ##   /var/log/apache.log -> only tail the apache log file
+##    files: ["/var/log/apache/access.log"]
+##    ## Read file from beginning.
+##    from_beginning: false
+##  
+##    ## Parse logstash-style "grok" patterns:
+##    ##   Telegraf built-in parsing patterns: https://goo.gl/dkay10
+##    grok:
+##      ## This is a list of patterns to check the given log file(s) for.
+##      ## Note that adding patterns here increases processing time. The most
+##      ## efficient configuration is to have one pattern per logparser.
+##      ## Other common built-in patterns are:
+##      ##   %{COMMON_LOG_FORMAT}   (plain apache & nginx access logs)
+##      ##   %{COMBINED_LOG_FORMAT} (access logs + referrer & agent)
+##      patterns: ["%{COMBINED_LOG_FORMAT}"]
+##      ## Name of the outputted measurement name.
+##      measurement: "apache_access_log"
+##      ## Full path(s) to custom pattern files.
+##      custom_pattern_files: []
+##      ## Custom patterns can also be defined here. Put one pattern per line.
+##      custom_patterns: | 
+##        CUSTOM_PATTERN_1_LOG_FORMAT
+##        CUSTOM_PATTERN_2_LOG_FORMAT
+
 ##   # Read metrics from MQTT topic(s)
 ##   - name: mqtt_consumer
 ##     servers: ["localhost:1883"]
@@ -1029,6 +1117,21 @@ telegraf_inputs:
 ##     ## more about them here:
 ##     ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
 ##     data_format: "influx"
+##   
+##   
+##  # Read NSQ topic for metrics.
+##  - name: nsq_consumer
+##    ## An string representing the NSQD TCP Endpoint
+##    server: "localhost:4150"
+##    topic: "telegraf"
+##    channel: "consumer"
+##    max_in_flight: 100
+##  
+##    ## Data format to consume.
+##    ## Each data format has it's own unique set of configuration options, read
+##    ## more about them here:
+##    ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
+##    data_format: "influx"
 ##   
 ##   
 ##   # Statsd Server
@@ -1125,3 +1228,53 @@ telegraf_inputs:
 ##     ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
 ##     data_format: "influx"
 ##   
+
+##  # A Webhooks Event collector
+##  - name: webhooks
+##    ## Address and port to host Webhook listener on
+##    service_address: ":1619"
+##    webhooks:
+##      - name: github
+##        path: "/github"
+##      - name: mandrill
+##        path: "/mandrill"
+##      - name: rollbar
+##        path: "/rollbar"
+
+## NEW INPUT
+##  Read flattened metrics from one or more GrayLog HTTP endpoints
+##  - name: graylog
+##    ## API endpoint, currently supported API:
+##    ##
+##    ##   - multiple  (Ex http://<host>:12900/system/metrics/multiple)
+##    ##   - namespace (Ex http://<host>:12900/system/metrics/namespace/{namespace})
+##    ##
+##    ## For namespace endpoint, the metrics array will be ignored for that call.
+##    ## Endpoint can contain namespace and multiple type calls.
+##    ##
+##    ## Please check http://[graylog-server-ip]:12900/api-browser for full list
+##    ## of endpoints
+##    servers: [
+##      "http://[graylog-server-ip]:12900/system/metrics/multiple",
+##    ]
+##
+##    ## Metrics list
+##    ## List of metrics can be found on Graylog webservice documentation.
+##    ## Or by hitting the the web service api at:
+##    ##   http://[graylog-host]:12900/system/metrics
+##    metrics: [
+##      "jvm.cl.loaded",
+##      "jvm.memory.pools.Metaspace.committed"
+##    ]
+##
+##    ## Username and password
+##    username: ""
+##    password: ""
+##
+##    ## Optional SSL Config
+##    # ssl_ca: "/etc/telegraf/ca.pem"
+##    # ssl_cert: "/etc/telegraf/cert.pem"
+##     # ssl_key: "/etc/telegraf/key.pem"
+##     ## Use SSL but skip chain & host verification
+##     # insecure_skip_verify: false
+

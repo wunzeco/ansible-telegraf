@@ -127,8 +127,8 @@
 
 {% for input in telegraf_service_inputs %}
 
-{% if input.name == 'statsd' %}
-{% include 'service-input-statsd.conf.j2' %}
+{% if input.name in ['statsd', 'logparser', 'webhooks'] %}
+{% include 'service-input-' + input.name + '.conf.j2' %}
 {% else %}
 [[inputs.{{ input.name }}]]
 {% for key,value in input.iteritems() %}
