@@ -6,6 +6,15 @@
     - roles/ansible-telegraf/test/input-plugins-vars.yml
     - roles/ansible-telegraf/test/output-plugins-vars.yml
 
+  pre_tasks:
+    - name: Copy metrics.py
+      copy: 
+        src: roles/ansible-telegraf/test/metrics.py
+        dest: /opt/metrics.py
+        owner: root
+        group: root
+        mode:  0755
+
   roles:
     - wunzeco.docker
     - wunzeco.influxdb
