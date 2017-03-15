@@ -1,9 +1,9 @@
 # HTTP/HTTPS request given an address a method and a timeout
 [[inputs.http_response]]
   address = "{{ input.address }}"
-  response_timeout = {{ input.response_timeout }}
-  method = "{{ input.method }}"
-  follow_redirects = {{ input.follow_redirects|bool|lower }}
+  response_timeout = {{ input.response_timeout|default(5) }}
+  method = "{{ input.method|default('GET') }}"
+  follow_redirects = {{ input.follow_redirects|default(false)|bool|lower }}
 {% if input.headers|default(false) %}
   [inputs.http_response.headers]
 {% for k,v in input.headers.iteritems() %}
