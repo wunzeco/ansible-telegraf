@@ -19,3 +19,17 @@
     - wunzeco.docker
     - wunzeco.influxdb
     - ansible-telegraf
+
+  post_tasks:
+    - name: Start tomcat container (to test http_response plugin)
+      docker_container:
+        name: tomcat
+        image: tomcat
+        published_ports: [ "8888:8080" ]
+        state: started
+    - name: Start kong-dashboard container (to test http_response plugin)
+      docker_container:
+        name: kong-dashboard
+        image: pgbi/kong-dashboard 
+        published_ports: [ "8080:8080" ]
+        state: started

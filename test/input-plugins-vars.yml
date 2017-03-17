@@ -49,23 +49,6 @@ telegraf_default_inputs:
   # Read metrics about system load & uptime
   - name: system
     # no configuration
-
-  # Read metrics from one or more commands that can output to stdout
-  - name: exec
-    ## Commands array
-    commands: ["/opt/metrics.py"]
-  
-    ## Timeout for each command to complete.
-    timeout: "5s"
-  
-    ## measurement name suffix (for separating different commands)
-    name_prefix: "mycoy_"
-  
-    ## Data format to consume.
-    ## Each data format has it's own unique set of configuration options, read
-    ## more about them here:
-    ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
-    data_format: "influx"
   
   
 
@@ -103,6 +86,44 @@ telegraf_inputs:
     urls: [
       "http://localhost:8086/debug/vars"
     ]
+
+  # Read metrics from one or more commands that can output to stdout
+  - name: exec
+    ## Commands array
+    commands: ["/opt/metrics.py"]
+  
+    ## Timeout for each command to complete.
+    timeout: "5s"
+  
+    ## measurement name suffix (for separating different commands)
+    name_prefix: "mycoy_"
+  
+    ## Data format to consume.
+    ## Each data format has it's own unique set of configuration options, read
+    ## more about them here:
+    ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
+    data_format: "influx"
+
+  # HTTP/HTTPS request given an address a method and a timeout
+  - name: http_response
+    ## Server address (default http://localhost)
+    address: "http://localhost:8080"
+    ### Set response_timeout (default 5 seconds)
+    #response_timeout: 5
+    ### HTTP Request Method
+    #method: "GET"
+    ### Whether to follow redirects from the server (defaults to false)
+    #follow_redirects: true
+  - name: http_response
+    ## Server address (default http://localhost)
+    address: "http://localhost:8888"
+    ### Set response_timeout (default 5 seconds)
+    #response_timeout: 5
+    ### HTTP Request Method
+    #method: "GET"
+    ### Whether to follow redirects from the server (defaults to false)
+    #follow_redirects: true
+   
   
 #telegraf_service_inputs:
 #  # Stream and parse log file(s).
