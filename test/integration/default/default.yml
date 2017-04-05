@@ -2,18 +2,24 @@
 - name: Telegraf play
   hosts: test-kitchen
 
+  vars:
+    docker_allow_users: [ telegraf ]
+
   vars_files:
     - roles/ansible-telegraf/test/input-plugins-vars.yml
     - roles/ansible-telegraf/test/output-plugins-vars.yml
 
   pre_tasks:
-    - name: Copy metrics.py
+    - name: Copy metrics collector scripts
       copy: 
-        src: roles/ansible-telegraf/test/metrics.py
-        dest: /opt/metrics.py
+        src: roles/ansible-telegraf/test/{{ item }}
+        dest: /opt/{{ item }}
         owner: root
         group: root
         mode:  0755
+      with_items:
+        - metrics.py
+        - kong-metrics-collector.py
 
   roles:
     - wunzeco.docker
@@ -32,4 +38,33 @@
         name: kong-dashboard
         image: pgbi/kong-dashboard 
         published_ports: [ "8080:8080" ]
+        state: started
+
+    - name: Start kong-database container (cassandra)
+      docker_container:
+        name: kong-database
+        image: "cassandra:2.2"
+        published_ports: [ "9042:9042" ]
+        state: started
+      register: db
+
+    - pause: seconds=15
+      when: db|changed
+
+    - name: Start kong containter (to test exec plugin for retrieving kong node usage info)
+      docker_container:
+        name: kong
+        image: kong
+        published_ports:
+          - "8000:8000"
+          - "8443:8443"
+          - "8001:8001"
+          - "7946:7946"
+          - "7946:7946/udp"
+        env:
+          KONG_DATABASE: cassandra
+          KONG_CASSANDRA_CONTACT_POINTS: kong-database
+          KONG_PG_HOST: kong-database
+        links:
+          - kong-database:kong-database
         state: started

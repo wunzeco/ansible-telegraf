@@ -91,7 +91,6 @@ telegraf_inputs:
   - name: exec
     ## Commands array
     commands: ["/opt/metrics.py"]
-  
     ## Timeout for each command to complete.
     timeout: "5s"
   
@@ -103,6 +102,18 @@ telegraf_inputs:
     ## more about them here:
     ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
     data_format: "influx"
+
+  # Read metrics from one or more commands that can output to stdout
+  - name: exec
+    commands: ["curl -s http://localhost:8001/status"]
+    #commands: ["/opt/kong-metrics-collector.py"]
+    timeout: "5s"
+    name_override: "mycoy_kong"
+    ## Data format to consume.
+    ## Each data format has it's own unique set of configuration options, read
+    ## more about them here:
+    ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
+    data_format: json
 
   # HTTP/HTTPS request given an address a method and a timeout
   - name: http_response
