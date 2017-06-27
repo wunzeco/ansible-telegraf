@@ -21,6 +21,6 @@
 
 - name: Install telegraf
   yum:
-    name:  "telegraf-{{ telegraf_version|default('*') }}"
+    name:  "{{ telegraf_pkg }}"
     update_cache: yes
     state: present
