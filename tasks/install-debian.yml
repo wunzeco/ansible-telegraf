@@ -1,9 +1,28 @@
 ---
 
-- name: Download and install telegraf apt public signing key
+# The error below might occur if pythong is < v2.7.9
+# "Failed to validate the SSL certificate for repos.influxdata.com:443. Make sure your managed systems have a valid CA certificate installed. If the website serving the url uses SNI you need python >= 2.7.9 on your managed machine or you can install the `urllib3`, `pyopenssl`, `ndg-httpsclient`, and `pyasn1` python modules to perform SNI verification in python >= 2.6. You can use validate_certs=False if you do not need to confirm the servers identity but this is unsafe and not recommended. Paths checked for this platform: /etc/ssl/certs, /etc/pki/ca-trust/extracted/pem, /etc/pki/tls/certs, /usr/share/ca-certificates/cacert.org, /etc/ansible"
+
+#- name: Download and install telegraf apt public signing key
+#  apt_key:
+#    url:   "{{ telegraf_signing_key_url }}"
+#    state: present
+
+- name: Download telegraf apt public signing key
+  command:
+      wget -q "{{ telegraf_signing_key_url }}" -O /var/tmp/influxdb.key
+  args:
+    creates: /var/tmp/influxdb.key
+
+- name: Install telegraf apt public signing key
   apt_key:
-    url:   "{{ telegraf_signing_key_url }}"
+    file:  /var/tmp/influxdb.key
     state: present
+
+#- name: Download and install telegraf apt public signing key
+#  shell:
+#      curl -sL {{ telegraf_signing_key_url }} | sudo apt-key add -
+#  changed_when: false
 
 - name: Add telegraf apt repository definition to apt sources list
   apt_repository: 
