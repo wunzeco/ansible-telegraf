@@ -3,6 +3,7 @@
   hosts: test-kitchen
 
   vars:
+    docker_package_version: '*'
     docker_allow_users: [ telegraf ]
 
   vars_files:
