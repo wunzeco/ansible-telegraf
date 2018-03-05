@@ -4,8 +4,8 @@
   include: "install-{{ ansible_os_family|lower }}.yml"
 
 - name: Create telegraf config file
-  template: 
-    src:   telegraf.conf.j2 
+  template:
+    src:   telegraf.conf.j2
     dest:  "{{ telegraf_conf_dir }}/telegraf.conf"
     owner: root
     group: root
@@ -13,8 +13,8 @@
   notify: Restart telegraf
 
 - name: Create telegraf startup script environment vars file
-  template: 
-    src:   etc.default.telegraf.j2 
+  template:
+    src:   etc.default.telegraf.j2
     dest:  /etc/default/telegraf
     owner: root
     group: root
@@ -22,8 +22,8 @@
   notify: Restart telegraf
 
 - name: Create telegraf logrotate config file
-  template: 
-    src:   telegraf.logrotate.j2 
+  template:
+    src:   telegraf.logrotate.j2
     dest:  /etc/logrotate.d/telegraf
     owner: root
     group: root

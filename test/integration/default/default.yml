@@ -11,7 +11,7 @@
 
   pre_tasks:
     - name: Copy metrics collector scripts
-      copy: 
+      copy:
         src: roles/ansible-telegraf/test/{{ item }}
         dest: /opt/{{ item }}
         owner: root
@@ -36,17 +36,33 @@
     - name: Start kong-dashboard container (to test http_response plugin)
       docker_container:
         name: kong-dashboard
-        image: pgbi/kong-dashboard 
+        image: pgbi/kong-dashboard
         published_ports: [ "8080:8080" ]
         state: started
 
-    - name: Start kong-database container (cassandra)
+    - name: Start kong-database container (postgres)
       docker_container:
         name: kong-database
-        image: "cassandra:2.2"
-        published_ports: [ "9042:9042" ]
+        image: "postgres:9.5"
+        published_ports: [ "5432:5432" ]
+        env:
+          POSTGRES_USER: kong
+          POSTGRES_DB: kong
         state: started
       register: db
+
+    - name: Run kong database migration
+      docker_container:
+        name: kong-database-migration
+        image: "kong"
+        command: kong migrations up
+        env:
+          KONG_DATABASE: postgres
+          KONG_PG_HOST: kong-database
+        links:
+          - kong-database:kong-database
+        state: started
+      when: db|changed
 
     - pause: seconds=15
       when: db|changed
@@ -62,9 +78,6 @@
           - "7946:7946"
           - "7946:7946/udp"
         env:
-          KONG_DATABASE: cassandra
-          KONG_CASSANDRA_CONTACT_POINTS: kong-database
+          KONG_DATABASE: postgres
           KONG_PG_HOST: kong-database
-        links:
-          - kong-database:kong-database
         state: started
