@@ -1,23 +1,13 @@
 ---
 
-## yum_repository available in Ansible v2.0.x or earlier
-##
-#- name: Add InfluxData yum repository file
-#  yum_repository:
-#    name: influxdata
-#    description: InfluxData repository
-#    baseurl: "{{ telegraf_yum_repo_baseurl }}"
-#    gpgkey: "{{ telegraf_signing_key_url }}"
-#    gpgcheck: yes
-#    enabled:  yes
-
-- name: Add influxData yum repository
-  template:
-    src:   influxdata.yum.repo.j2
-    dest:  /etc/yum.repos.d/influxdata.repo
-    owner: root
-    group: root
-    mode:  0644
+- name: Add InfluxData yum repository file
+  yum_repository:
+    name: influxdb
+    description: "InfluxDB Repository - RHEL"
+    baseurl: "{{ telegraf_yum_repo_baseurl }}"
+    gpgkey: "{{ telegraf_signing_key_url }}"
+    gpgcheck: yes
+    enabled:  yes
 
 - name: Install telegraf
   yum:
