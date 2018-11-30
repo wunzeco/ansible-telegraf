@@ -136,18 +136,18 @@ telegraf_inputs:
     #follow_redirects: true
    
   
-#telegraf_service_inputs:
-#  # Stream and parse log file(s).
-#  - name: logparser
-#    files: ["/var/log/apache/access.log"]
-#    from_beginning: false
-#    grok:
-#      patterns: ["%{COMBINED_LOG_FORMAT}"]
-#      measurement: "apache_access_log"
-#      custom_pattern_files: []
-#      custom_patterns: | 
-#        CUSTOM_PATTERN_1_LOG_FORMAT
-#        CUSTOM_PATTERN_2_LOG_FORMAT
+telegraf_service_inputs:
+  # Stream and parse log file(s).
+  - name: logparser
+    files: ["/var/log/apache/access.log"]
+    from_beginning: false
+    grok:
+      patterns: ["%{COMBINED_LOG_FORMAT}"]
+      measurement: "apache_access_log"
+      #custom_pattern_files: []
+      #custom_patterns: | 
+      #  CUSTOM_PATTERN_1_LOG_FORMAT
+      #  CUSTOM_PATTERN_2_LOG_FORMAT
 #  # A Webhooks Event collector
 #  - name: webhooks
 #    ## Address and port to host Webhook listener on

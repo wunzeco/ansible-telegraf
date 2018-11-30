@@ -7,7 +7,7 @@
   ##   /var/log/*/*.log    -> find all .log files with a parent dir in /var/log
   ##   /var/log/apache.log -> only tail the apache log file
 {% for key,value in input|dictsort %}
-{% if key != 'grok' %}
+{% if key != 'name' and key != 'grok' %}
 {% if value|string == 'True' or value|string == 'False' %}
   {{ key }} = {{ value|lower }}
 {% elif value is number %}
@@ -31,17 +31,17 @@
     ## Other common built-in patterns are:
     ##   %{COMMON_LOG_FORMAT}   (plain apache & nginx access logs)
     ##   %{COMBINED_LOG_FORMAT} (access logs + referrer & agent)
-    patterns = [ "{{ value.patterns|join('", "') }}" ]
+    patterns = [ "{{ input.grok.patterns|join('", "') }}" ]
     ## Name of the outputted measurement name.
-    measurement = "{{ value.measurement }}"
+    measurement = "{{ input.grok.measurement }}"
     ## Full path(s) to custom pattern files.
-{% if value.custom_pattern_files|default(false) %}
-    custom_pattern_files = [ "{{ value.custom_pattern_files|join('", "') }}" ]
-{% else %}
-    custom_pattern_files = []
+{% if input.grok.custom_pattern_files|default(false) %}
+    custom_pattern_files = [ "{{ input.grok.custom_pattern_files|join('", "') }}" ]
 {% endif %}
+{% if input.grok.custom_pattern|default(false) %}
     ## Custom patterns can also be defined here. Put one pattern per line.
     custom_patterns = '''
-    {{ value.custom_patterns|indent(4, False) }}
+    {{ input.grok.custom_patterns|indent(4, False) }}
     '''
+{% endif %}
 {% endif %}
