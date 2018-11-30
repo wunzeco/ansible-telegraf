@@ -6,8 +6,8 @@
   ##   /var/log/**.log     -> recursively find all .log files in /var/log
   ##   /var/log/*/*.log    -> find all .log files with a parent dir in /var/log
   ##   /var/log/apache.log -> only tail the apache log file
-{% for key,value in input.iteritems() %}
-{% if key != 'name' %}
+{% for key,value in input|dictsort %}
+{% if key != 'grok' %}
 {% if value|string == 'True' or value|string == 'False' %}
   {{ key }} = {{ value|lower }}
 {% elif value is number %}
@@ -17,7 +17,10 @@
 {# LIST #}
 {% elif value is iterable and value is not mapping %}
   {{ key }} = [ "{{ value|join('", "') }}" ]
-{% elif key == "grok" %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% if input.grok|default(false) %}
 
   ## Parse logstash-style "grok" patterns:
   ##   Telegraf built-in parsing patterns: https://goo.gl/dkay10
@@ -32,7 +35,7 @@
     ## Name of the outputted measurement name.
     measurement = "{{ value.measurement }}"
     ## Full path(s) to custom pattern files.
-{% if value.custom_pattern_files %}
+{% if value.custom_pattern_files|default(false) %}
     custom_pattern_files = [ "{{ value.custom_pattern_files|join('", "') }}" ]
 {% else %}
     custom_pattern_files = []
@@ -42,6 +45,3 @@
     {{ value.custom_patterns|indent(4, False) }}
     '''
 {% endif %}
-{% endif %}
-{% endfor %}
-
