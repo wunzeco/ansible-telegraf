@@ -1,7 +1,7 @@
 ---
 
 - name: Install telegraf
-  include: "install-{{ ansible_os_family|lower }}.yml"
+  include_tasks: "install-{{ ansible_os_family|lower }}.yml"
 
 - name: Create telegraf config file
   template:
