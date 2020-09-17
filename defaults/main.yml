@@ -6,6 +6,7 @@ telegraf_group: "{{ telegraf_user }}"
 #############
 ## Package
 telegraf_version: '*'                # e.g. 0.13.0 or '*' for latest
+telegraf_pkg: '{{ "telegraf" if telegraf_version == "*" else "telegraf" + "-" + telegraf_version}}'
 telegraf_signing_key_url: "https://repos.influxdata.com/influxdb.key" 
 telegraf_apt_repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable" 
 telegraf_yum_repo_baseurl: 'https://repos.influxdata.com/centos/\$releasever/\$basearch/stable'
